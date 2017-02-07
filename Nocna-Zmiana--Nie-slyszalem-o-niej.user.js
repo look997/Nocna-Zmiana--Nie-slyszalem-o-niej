@@ -7,9 +7,9 @@
 // @grant		none
 // @include		http://www.wykop.pl/*
 // @date           2017-02-07
-// @resource       metadata https://github.com/look997/Nocna-Zmiana--Nie-slyszalem-o-niej/raw/master/Nocna-Zmiana--Nie-slyszalem-o-niej.user.js
-// @downloadURL    https://github.com/look997/Nocna-Zmiana--Nie-slyszalem-o-niej/raw/master/Nocna-Zmiana--Nie-slyszalem-o-niej.user.js
-// @updateURL      https://github.com/look997/Nocna-Zmiana--Nie-slyszalem-o-niej/raw/master/Nocna-Zmiana--Nie-slyszalem-o-niej.user.js
+// @resource       metadata 
+// @downloadURL    
+// @updateURL      
 // @run-at 		document-end
 // ==/UserScript==
 
@@ -30,85 +30,16 @@ function main() {
 	const allFn = (scopeEl)=> {
 	console.log("allFn 0");
 	
-	const currentDate = new Date();
-	//let nickB = profile.getAttribute("href").split("/");
-	//let nick = nickB[nickB.length-2];
-	//console.log("allFn 0");
-	profiles.forEach((profileEl, index)=>{
-		//console.log("allFn 1", profileEl.querySelector(".siwaBroda"));
-		if (profileEl.querySelector(".siwaBroda")) { return false; }
-		const avatarEl = profileEl.querySelector(".avatar");
-		if (!avatarEl.classList.contains("male") && profileEl !== document.querySelector('.logged-user > a')) {return false;}
-		
-		const nickB = profileEl.getAttribute("href").split("/");
-		const nick = nickB[nickB.length-2];
-		profileEl.style = "position: relative;";
-		//profile.innerHTML += `<img src="${siwaBroda[0]}"></img>`;
-
-		
-
-		const addSiwaBrodaAndMutation = (profileEl)=> {
-			addSiwaBroda(profileEl);
-
-			let profileElObserver = new MutationObserver((mutations)=> {
-				//console.log("prifilEl mutation");
-				if (2 !== mutations[0].target.querySelector(".profile").childElementCount) {
-					//console.log("profil mutation addSiwaBroda");
-					addSiwaBroda(mutations[0].target.querySelector(".profile"));
-				}
-			});
-			profileElObserver.observe( profileEl.parentElement.parentElement, {childList: true} );
-		};
-
-		if(ages[nick] === undefined) {
-			fetch(`http://a.wykop.pl/profile/${nick}/appkey,tss651YJRF`)
-			.then((response)=> {
-			return response.json();
-			}).then((json)=>{
-				const singUpDate = new Date(json.signup_date); // np. "2014-11-10 19:07:59"
-				const age = Math.floor((currentDate - singUpDate) / 31557600000); // 31557600000 is 24 * 3600 * 365.25 * 1000 which is the length of a year
-				
-				if (age >= 0) {
-					ages[nick] = age;
-					localStorage.setItem("ages", JSON.stringify(ages));
-
-					addSiwaBrodaAndMutation(profileEl);
-				} else if (json.error.code === 13) {
-					console.log("error code 13", json, nick, ":", currentDate, "-", singUpDate, `(${json.signup_date}) =`, age);
-				} else {
-					console.log("error !age >= 0", json, nick, ":", currentDate, "-", singUpDate, `(${json.signup_date}) =`, age);
-					const errString = `<img class="siwaBroda" src="" alt="[Error]" style="font-size: 11px; display: flex; position: absolute; left: 0;" title='Brody nie dodano z powodu błędu po stronie Wykop API: "${json.error.message}".\nPoproś administrację i moderację o zwiększenie limitu żądań dla dodatku "Siwa Broda".\nNapisz do #moderacja #administracja na mikroblogu lub w prywatnej wiadomości.\n[Komunikat dodatku: "Siwa Broda"]'></img>`;
-					appendChild(profileEl, errString);
-
-					let profileElErrObserver = new MutationObserver((mutations)=> {
-						//console.log("profilEl mutation");
-						if (2 !== mutations[0].target.querySelector(".profile").childElementCount) {
-							//console.log("profil mutation errString");
-							mutations[0].target.querySelector(".profile").style = "position: relative;";
-							appendChild(mutations[0].target.querySelector(".profile"), errString);
-						}
-					});
-					profileElErrObserver.observe( profileEl.parentElement.parentElement, {childList: true} );
-				}
-			}).catch((error)=>{
-				console.log(error);
-				const errString = `<img class="siwaBrodaError" src="" alt="[Error]" style="font-size: 11px; display: flex; position: absolute; left: 0;" title='Brody nie dodano z powodu błędu po stronie Wykop API: "${json.error.message}".\nPoproś administrację i moderację o zwiększenie limitu żądań dla dodatku "Siwa Broda".\nNapisz do #moderacja #administracja na mikroblogu lub w prywatnej wiadomości.\n[Komunikat dodatku: "Siwa Broda"]'></img>`;
-				appendChild(profileEl, errString);
-
-				let profileElCatchObserver = new MutationObserver((mutations)=> {
-					//console.log("profilEl mutation");
-					if (2 !== mutations[0].target.querySelector(".profile").childElementCount) {
-						//console.log("profil mutation addSiwaBroda");
-						mutations[0].target.querySelector(".profile").style = "position: relative;";
-						appendChild(mutations[0].target.querySelector(".profile"), errString);
-					}
-				});
-				profileElCatchObserver.observe( profileEl.parentElement.parentElement, {childList: true} );
-			});
-		} else {
-			addSiwaBrodaAndMutation(profileEl);
+	const EntryEls = Array.prototype.slice.call(document.querySelectorAll("#itemsStream > .entry"));
+	//console.log(EntryEls);
+	EntryEls.forEach((entryEl)=>{
+		const entryDate = entryEl.querySelector("time").title;
+		const hour = entryDate.split(" ")[1].split(":")[0];
+		if(hour >= 0 && hour <= 5) {
+			//entryEl.style.border = "3px solid red";
+			console.log(entryEl);
+			entryEl.style.display = "none";
 		}
-		//console.log("allFn");
 	});
 	
 
