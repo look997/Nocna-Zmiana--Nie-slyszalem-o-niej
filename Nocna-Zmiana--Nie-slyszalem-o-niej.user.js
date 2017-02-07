@@ -7,9 +7,9 @@
 // @grant		none
 // @include		http://www.wykop.pl/*
 // @date           2017-02-07
-// @resource       metadata 
-// @downloadURL    
-// @updateURL      
+// @resource       metadata https://github.com/look997/Nocna-Zmiana--Nie-slyszalem-o-niej/raw/master/Nocna-Zmiana--Nie-slyszalem-o-niej.user.js
+// @downloadURL    https://github.com/look997/Nocna-Zmiana--Nie-slyszalem-o-niej/raw/master/Nocna-Zmiana--Nie-slyszalem-o-niej.user.js
+// @updateURL      https://github.com/look997/Nocna-Zmiana--Nie-slyszalem-o-niej/raw/master/Nocna-Zmiana--Nie-slyszalem-o-niej.user.js
 // @run-at 		document-end
 // ==/UserScript==
 
