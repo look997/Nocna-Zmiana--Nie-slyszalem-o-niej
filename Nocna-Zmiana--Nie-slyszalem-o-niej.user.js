@@ -1,12 +1,12 @@
 // ==UserScript==
 // @name		Nocna Zmiana? Nie słyszałem o niej.
-// @namespace		http://www.wykop.pl/ludzie/look997/
-// @description		 Blokuje wyświetlanie wszystkich wpisów dodanych od 24:00 do 6:00 w serwisie Wykop.pl, z tzw. "Nocnej zmiany".
+// @namespace		https://www.wykop.pl/ludzie/look997/
+// @description		 Ukrywa wszystkie wpisy dodanych od 00:00 do 6:00 w serwisie Wykop.pl, z tzw. "Nocnej zmiany" oraz wpisy bez tagów (wszystko da się ustawić pod siebie).
 // @author		look997
-// @version		0.1 beta
+// @version		0.3 beta
 // @grant		none
-// @include		http://www.wykop.pl/*
-// @date           2017-02-07
+// @include		https://www.wykop.pl/*
+// @date           2017-08-22
 // @resource       metadata 
 // @downloadURL    
 // @updateURL      
@@ -15,9 +15,28 @@
 
 "use strict";
 
-
 function main() {
 	"use strict";
+	
+	
+
+	// USTWIENIA
+	
+		// Godziny ukrywane:
+		const startHiddingHour = 0; // tylko pełne godziny: 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23
+		const stopHiddingHour = 6; // tylko pełne godziny: 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23
+		
+		// Ukrywanie - włącz/wyłącz:
+		const hideHours = false; // ukrywa wpisy w [ustawionych] godzinach
+		const hideNoTag = true; // ukrywa wpisy bez tagów
+		
+		// Tylko oznaczenie czerwoną ramką - włącz/wyłącz:
+		const markHours = true; // oznacza czerwoną ramką wpisy w [ustawionych] godzinach
+		const markNoTag = true; // oznacza czerwoną ramką wpisy bez tagów
+	
+	// Koniec USTAWIEŃ
+
+
 	let MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver;
 
 	function appendChild (parentEl, stringEl) {
@@ -35,10 +54,27 @@ function main() {
 	EntryEls.forEach((entryEl)=>{
 		const entryDate = entryEl.querySelector("time").title;
 		const hour = entryDate.split(" ")[1].split(":")[0];
-		if(hour >= 0 && hour <= 5) {
-			//entryEl.style.border = "3px solid red";
+		const tagExist = entryEl.querySelector(".text").querySelector(".showTagSummary");
+		console.log(tagExist);
+		//if((!hideNoTag && hour >= startHiddingHour && hour <= stopHiddingHour-1) || (hideNoTag && !tagExist)) {
+		if (hour >= startHiddingHour && hour <= stopHiddingHour-1) {
+			if (hideHours) {
+				entryEl.style.display = "none";
+			}
+			if (markHours) {
+				entryEl.style.borderRight = "3px solid #a22a2a";
+				//entryEl.style.backgroundColor = "#412c2c";
+			}
 			console.log(entryEl);
-			entryEl.style.display = "none";
+		}
+		if (!tagExist) {
+			if (hideNoTag) {
+				entryEl.style.display = "none";
+			}
+			if (markNoTag) {
+				entryEl.style.borderRight = "3px solid #a22a2a";
+				//entryEl.style.backgroundColor = "#412c2c";
+			}
 		}
 	});
 	
