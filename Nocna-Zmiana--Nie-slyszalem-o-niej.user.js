@@ -3,10 +3,10 @@
 // @namespace		https://www.wykop.pl/ludzie/look997/
 // @description		 Ukrywa wszystkie wpisy dodanych od 00:00 do 6:00 w serwisie Wykop.pl, z tzw. "Nocnej zmiany" oraz wpisy bez tagów (wszystko da się ustawić pod siebie).
 // @author		look997
-// @version		0.3 beta
+// @version		0.4 beta
 // @grant		none
 // @include		https://www.wykop.pl/*
-// @date           2017-08-22
+// @date           2018-01-01
 // @resource       metadata 
 // @downloadURL    
 // @updateURL      
@@ -58,20 +58,20 @@ function main() {
 		console.log(tagExist);
 		//if((!hideNoTag && hour >= startHiddingHour && hour <= stopHiddingHour-1) || (hideNoTag && !tagExist)) {
 		if (hour >= startHiddingHour && hour <= stopHiddingHour-1) {
-			if (hideHours) {
+			if (hideHours && !location.toString().includes("https://www.wykop.pl/wpis")) {
 				entryEl.style.display = "none";
 			}
-			if (markHours) {
+			if (markHours || (hideHours && location.toString().includes("https://www.wykop.pl/wpis"))) {
 				entryEl.style.borderRight = "3px solid #a22a2a";
 				//entryEl.style.backgroundColor = "#412c2c";
 			}
 			console.log(entryEl);
 		}
 		if (!tagExist) {
-			if (hideNoTag) {
+			if (hideNoTag && !location.toString().includes("https://www.wykop.pl/wpis")) {
 				entryEl.style.display = "none";
 			}
-			if (markNoTag) {
+			if (markNoTag || (hideNoTag && location.toString().includes("https://www.wykop.pl/wpis"))) {
 				entryEl.style.borderRight = "3px solid #a22a2a";
 				//entryEl.style.backgroundColor = "#412c2c";
 			}
