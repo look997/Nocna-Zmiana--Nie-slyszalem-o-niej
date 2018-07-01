@@ -3,7 +3,7 @@
 // @namespace		https://www.wykop.pl/ludzie/look997/
 // @description		 Ukrywa wszystkie wpisy dodanych od 00:00 do 6:00 w serwisie Wykop.pl, z tzw. "Nocnej zmiany" oraz wpisy bez tagów (wszystko da się ustawić pod siebie).
 // @author		look997
-// @version		0.3 beta
+// @version		0.4 beta
 // @grant		none
 // @include		https://www.wykop.pl/*
 // @date           2018-07-01
