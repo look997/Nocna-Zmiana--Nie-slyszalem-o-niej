@@ -3,10 +3,10 @@
 // @namespace		https://www.wykop.pl/ludzie/look997/
 // @description		 Ukrywa wszystkie wpisy dodanych od 00:00 do 6:00 w serwisie Wykop.pl, z tzw. "Nocnej zmiany" oraz wpisy bez tagów (wszystko da się ustawić pod siebie).
 // @author		look997
-// @version		0.4 beta
+// @version		0.5 beta
 // @grant		none
 // @include		https://www.wykop.pl/*
-// @date           2018-07-01
+// @date           2020-04-13
 // @resource       metadata 
 // @downloadURL    
 // @updateURL      
@@ -24,11 +24,13 @@ function main() {
 	
 		// Godziny ukrywane:
 		const startHiddingHour = 0; // tylko pełne godziny: 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23
-		const stopHiddingHour = 6; // tylko pełne godziny: 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23
+		const stopHiddingHour = 7; // tylko pełne godziny: 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23
 		
 		// Ukrywanie - włącz/wyłącz:
-		const hideHours = true; // ukrywa wpisy w [ustawionych] godzinach
-		const hideNoTag = true; // ukrywa wpisy bez tagów
+		const hideHours = false; // ukrywa wpisy z [ustawionych] godzin
+		const hideNoTag = false; // ukrywa wpisy bez tagów
+  	
+  	const hideInHours = true; // ukrywa nocne/tagowane wpisy POZA wyznaczonymi godzinami (kto siedzi w nocy-widzi, kto siedzi w dzień-nie widzi)
 		
 		// Tylko oznaczenie czerwoną ramką - włącz/wyłącz:
 		const markHours = true; // oznacza czerwoną ramką wpisy w [ustawionych] godzinach
@@ -52,6 +54,8 @@ function main() {
 	const EntryEls = Array.prototype.slice.call(document.querySelectorAll("#itemsStream > .entry"));
 	//console.log(EntryEls);
 	EntryEls.forEach((entryEl)=>{
+    const d = new Date();
+    const n = d.getHours();
 		const entryDate = entryEl.querySelector("time").title;
 		const hour = entryDate.split(" ")[1].split(":")[0];
 		const tagExist = entryEl.querySelector(".text").querySelector(".showTagSummary");
@@ -76,6 +80,14 @@ function main() {
 				//entryEl.style.backgroundColor = "#412c2c";
 			}
 		}
+    if (hideInHours && !location.toString().includes("https://www.wykop.pl/wpis")) {
+      if ((startHiddingHour > n || stopHiddingHour <= n) && hour >= startHiddingHour && hour <= stopHiddingHour-1) {
+          entryEl.style.display = "none";
+      }
+      if ((startHiddingHour > n || stopHiddingHour <= n) && !tagExist) {
+          entryEl.style.display = "none";
+      }
+    }
 	});
 	
 
