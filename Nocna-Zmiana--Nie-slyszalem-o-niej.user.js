@@ -24,70 +24,70 @@ const diffTime = Math.abs(Date.now() - new Date(VSCodeLMDate).getTime())/1000;
 // ==/UserScript==
 
 (async function () {
-	
-	// USTAWIENIA
-		
-		// Godziny ukrywane:
-		const startHiddingHour = 0; // tylko pełne godziny: 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23
-		const stopHiddingHour = 7; // tylko pełne godziny: 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23
-		
-		// Ukrywanie - włącz/wyłącz:
-		const hideHours = false; // ukrywa wpisy z [ustawionych] godzin
-		const hideNoTag = false; // ukrywa wpisy bez tagów
-  	
-  	const nightVision = true; // gdy ustawisz true:
-															// siedzisz w dzień - widzisz tylko dzienną
-															// siedzisz w nocy - widzisz I DZIENNĄ, I NOCNĄ
-															// - taka furtka, gdy chcesz rozdzielić dzień od nocy :)
-															
-		// Oznaczenie czerwoną ramką - włącz/wyłącz (wpis z ramką widoczny, gdy hideHours/HideNoTag/nightVision jest na false):
-		const markHours = true; // oznacza czerwoną ramką wpisy w [ustawionych] godzinach
-		const markNoTag = true; // oznacza czerwoną ramką wpisy bez tagów
-		
-	// Koniec USTAWIEŃ
-	
-	const filter = [
-		"mikroblog-page-comment",
-		"tag-page-comment",
-		"moj-page-comment",
-		"glowna-page-comment",
-		"ludzie-page-wpis-comment",
-		
-	];
-	// @ts-ignore
-	wykopObserve(filter, function ({profileEl, liEl, contentEl}, {place, isFirstTime, nick, authorSex}) {
-		const entryDate = liEl.querySelector("time").title;
-		const postHour = entryDate.split(" ")[1].split(":")[0];
-		
-		const hasTags = liEl.querySelector(".text").querySelector(".showTagSummary");
-		const isNightPost = postHour >= startHiddingHour && postHour <= stopHiddingHour-1;
-		
-		if (isNightPost) {
-			if (hideHours) {
-				liEl.style.display = "none";
-			}
-			if (markHours) {
-				liEl.style.borderRight = "3px solid #a22a2a";
-			}
-		}
-		if (!hasTags) {
-			if (hideNoTag) {
-				liEl.style.display = "none";
-			}
-			if (markNoTag) {
-				liEl.style.borderRight = "3px solid #a22a2a";
-			}
-		}
-		if ( nightVision && (isNightPost || !hasTags) ) {
-			const currentHour = new Date().getHours();
-			
-			if ( !(currentHour >= startHiddingHour && currentHour <= stopHiddingHour-1) ) {
-				liEl.style.display = "none";
-			}
-		}
-		
-	}, {once:true});
-	
-	// INIT End
-	
+  
+  // USTAWIENIA
+    
+    // Godziny ukrywane:
+    const startHiddingHour = 0; // tylko pełne godziny: 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23
+    const stopHiddingHour = 7; // tylko pełne godziny: 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23
+    
+    // Ukrywanie - włącz/wyłącz:
+    const hideHours = false; // ukrywa wpisy z [ustawionych] godzin
+    const hideNoTag = false; // ukrywa wpisy bez tagów
+    
+    const nightVision = true; // gdy ustawisz true:
+                              // siedzisz w dzień - widzisz tylko dzienną
+                              // siedzisz w nocy - widzisz I DZIENNĄ, I NOCNĄ
+                              // - taka furtka, gdy chcesz rozdzielić dzień od nocy :)
+                              
+    // Oznaczenie czerwoną ramką - włącz/wyłącz (wpis z ramką widoczny, gdy hideHours/HideNoTag/nightVision jest na false):
+    const markHours = true; // oznacza czerwoną ramką wpisy w [ustawionych] godzinach
+    const markNoTag = true; // oznacza czerwoną ramką wpisy bez tagów
+    
+  // Koniec USTAWIEŃ
+  
+  const filter = [
+    "mikroblog-page-comment",
+    "tag-page-comment",
+    "moj-page-comment",
+    "glowna-page-comment",
+    "ludzie-page-wpis-comment",
+    
+  ];
+  // @ts-ignore
+  wykopObserve(filter, function ({profileEl, liEl, contentEl}, {place, isFirstTime, nick, authorSex}) {
+    const entryDate = liEl.querySelector("time").title;
+    const postHour = entryDate.split(" ")[1].split(":")[0];
+    
+    const hasTags = liEl.querySelector(".text").querySelector(".showTagSummary");
+    const isNightPost = postHour >= startHiddingHour && postHour <= stopHiddingHour-1;
+    
+    if (isNightPost) {
+      if (hideHours) {
+        liEl.style.display = "none";
+      }
+      if (markHours) {
+        liEl.style.borderRight = "3px solid #a22a2a";
+      }
+    }
+    if (!hasTags) {
+      if (hideNoTag) {
+        liEl.style.display = "none";
+      }
+      if (markNoTag) {
+        liEl.style.borderRight = "3px solid #a22a2a";
+      }
+    }
+    if ( nightVision && (isNightPost || !hasTags) ) {
+      const currentHour = new Date().getHours();
+      
+      if ( !(currentHour >= startHiddingHour && currentHour <= stopHiddingHour-1) ) {
+        liEl.style.display = "none";
+      }
+    }
+    
+  }, {once:true});
+  
+  // INIT End
+  
 })()
