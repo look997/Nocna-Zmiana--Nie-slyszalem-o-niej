@@ -1,5 +1,5 @@
 // @ts-ignore
-const VSCodeLMDate = "2021/12/31 12:25:42";
+const VSCodeLMDate = "2021/12/31 12:40:19";
 
 // @ts-ignore
 const diffTime = Math.abs(Date.now() - new Date(VSCodeLMDate).getTime())/1000;
@@ -11,11 +11,11 @@ const diffTime = Math.abs(Date.now() - new Date(VSCodeLMDate).getTime())/1000;
 // @version     0.6 beta
 // @author      look997
 // @include     https://www.wykop.pl/*
+// @homepageURL https://www.wykop.pl/ludzie/addons/look997/
+// @namespace	  https://www.wykop.pl/ludzie/addons/look997/
 // @grant       none
 // @require     https://greasyfork.org/scripts/437595-wykopobserve/code/WykopObserve.js?version=1002287
 // @run-at      document-end
-// @homepageURL https://www.wykop.pl/ludzie/addons/look997/
-// @namespace	  https://www.wykop.pl/ludzie/addons/look997/
 // @downloadURL https://github.com/look997/Nocna-Zmiana--Nie-slyszalem-o-niej/raw/master/Nocna-Zmiana--Nie-slyszalem-o-niej.user.js
 // @updateURL   https://github.com/look997/Nocna-Zmiana--Nie-slyszalem-o-niej/raw/master/Nocna-Zmiana--Nie-slyszalem-o-niej.user.js
 // @resource    metadata https://github.com/look997/Nocna-Zmiana--Nie-slyszalem-o-niej/raw/master/Nocna-Zmiana--Nie-slyszalem-o-niej.user.js
