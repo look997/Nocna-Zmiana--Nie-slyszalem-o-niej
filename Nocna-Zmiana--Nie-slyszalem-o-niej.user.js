@@ -26,7 +26,7 @@ const diffTime = Math.abs(Date.now() - new Date(VSCodeLMDate).getTime())/1000;
 (async function () {
  
 	if (document.cookie.includes("us--nznson=nieChcęNznson")) { return false; }
-	// document.cookie = "us-female-block=nieChcęFemaleBlock"
+	// document.cookie = "us-nznson=nieChcęNznson"
   
   // USTAWIENIA
     
