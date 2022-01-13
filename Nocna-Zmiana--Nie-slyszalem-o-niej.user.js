@@ -1,5 +1,5 @@
 // @ts-ignore
-const VSCodeLMDate = "2021/12/31 17:45:35";
+const VSCodeLMDate = "2022/01/01 10:49:46";
 
 // @ts-ignore
 const diffTime = Math.abs(Date.now() - new Date(VSCodeLMDate).getTime())/1000;
@@ -26,7 +26,7 @@ const diffTime = Math.abs(Date.now() - new Date(VSCodeLMDate).getTime())/1000;
 (async function () {
  
 	if (document.cookie.includes("us-nznson=nieChcęNznson")) { return false; }
-	// document.cookie = "us-nznson=nieChcęNznson"
+	// document.cookie = "us-nznson=nieChcęNznson; expires=02-02-2222; path=/";
   
   // USTAWIENIA
     
