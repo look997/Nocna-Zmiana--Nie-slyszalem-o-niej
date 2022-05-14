@@ -48,7 +48,6 @@
     "tag-page-comment",
     "moj-page-comment",
     "glowna-page-comment",
-    "ludzie-page-wpis-comment",
     
   ];
   // @ts-ignore
