@@ -1,14 +1,7 @@
-// @ts-ignore
-const VSCodeLMDate = "2022/01/01 10:49:46";
-
-// @ts-ignore
-const diffTime = Math.abs(Date.now() - new Date(VSCodeLMDate).getTime())/1000;
-// console.log(VSCodeLMDate, `${Math.floor(diffTime)} secs ago`);
-
 // ==UserScript==
 // @name        Nocna Zmiana? Nie słyszałem o niej.
 // @description Ukrywa wszystkie wpisy dodanych od 00:00 do 6:00 w serwisie Wykop.pl, z tzw. "Nocnej zmiany" oraz wpisy bez tagów (wszystko da się ustawić pod siebie).
-// @version     0.6.2
+// @version     0.6.3
 // @author      look997
 // @include     https://www.wykop.pl/*
 // @homepageURL https://www.wykop.pl/ludzie/addons/look997/
@@ -26,6 +19,7 @@ const diffTime = Math.abs(Date.now() - new Date(VSCodeLMDate).getTime())/1000;
 (async function () {
  
 	if (document.cookie.includes("us-nznson=nieChcęNznson")) { return false; }
+	// document.cookie = `us-nznson=nieChcęNznson; maxAge=${100*365*24*60*60}; path=/`;
 	// document.cookie = "us-nznson=nieChcęNznson; expires=02-02-2222; path=/";
   
   // USTAWIENIA
@@ -59,6 +53,10 @@ const diffTime = Math.abs(Date.now() - new Date(VSCodeLMDate).getTime())/1000;
   ];
   // @ts-ignore
   wykopObserve(filter, function ({profileEl, liEl, contentEl}, {place, isFirstTime, nick, authorSex}) {
+    
+    // @ts-ignore
+    if (loginUser === nick) { return; }
+    
     const entryDate = liEl.querySelector("time").title;
     const postHour = entryDate.split(" ")[1].split(":")[0];
     
